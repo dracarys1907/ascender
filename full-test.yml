@@ -1,0 +1,34 @@
+---
+- name: Kurumsal Ledger ve Ascender Test Playbook
+  hosts: all
+  become: yes
+  tasks:
+    - name: 1. Sistem Bilgilerini Topla (Facts)
+      ansible.builtin.setup:
+      register: system_facts
+
+    - name: 2. Test Klasörü Oluştur (Changes Kısmı İçin)
+      ansible.builtin.file:
+        path: /tmp/ledger_test
+        state: directory
+        mode: '0755'
+
+    - name: 3. Test Dosyası Yaz (Audit Log İçin)
+      ansible.builtin.copy:
+        content: "Ledger Testi Basariyla Gerceklestirildi - {{ ansible_date_time.iso8601 }}"
+        dest: /tmp/ledger_test/status.txt
+
+    - name: 4. Paket Bilgisi Sorgula (Packages Kısmı İçin)
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: 5. Mevcut Disk Durumunu Mesaj Olarak Bas
+      ansible.builtin.debug:
+        msg: "Sunucu {{ inventory_hostname }} uzerinde disk durumu kontrol edildi."
+
+    - name: 6. Gecici Bir Servis Kontrolü Yap (Services Kısmı İçin)
+      ansible.builtin.service_facts:
+
+    - name: 7. Ledger İçin Özet Bilgi Yazdır
+      ansible.builtin.debug:
+        var: ansible_distribution_version

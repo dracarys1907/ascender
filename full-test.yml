@@ -1,6 +1,6 @@
 ---
 - name: Kurumsal Ledger ve Ascender Test Playbook
-  hosts: all
+  hosts: localhost
   become: yes
   tasks:
     - name: 1. Sistem Bilgilerini Topla (Facts)

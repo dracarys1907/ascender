@@ -1,0 +1,11 @@
+---
+- name: Paket listesini Ledger'a gonder
+  hosts: all
+  tasks:
+    - name: Paket bilgilerini topla
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Paketleri debug ile goster (Opsiyonel)
+      ansible.builtin.debug:
+        var: ansible_facts.packages

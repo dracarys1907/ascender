@@ -1,0 +1,6 @@
+---
+- name: Servis listesini Ledger'a gonder
+  hosts: all
+  tasks:
+    - name: Servis bilgilerini topla
+      ansible.builtin.service_facts:
